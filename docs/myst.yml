@@ -1,0 +1,22 @@
+# See docs at: https://mystmd.org/guide/frontmatter
+version: 1
+project:
+  id: 5f8f1e80-de5f-4884-bb57-9d4c663358bb
+  title: RECOVAR
+  description: Unsupervised earthquake detection from continuous waveforms.
+  github: https://github.com/onurefe/recovar
+  toc:
+    - file: index.md
+    - file: ../README.md
+      title: Overview & install
+    - file: ../demo.ipynb
+      title: Demo
+    - file: mseed.md
+    - title: SeisComP
+      children:
+        - file: ../seiscomp_integration/README.md
+          title: SeisComP integration
+        - file: ../seiscomp_integration/docker/README.md
+          title: Docker
+site:
+  template: book-theme

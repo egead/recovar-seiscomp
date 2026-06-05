@@ -1,0 +1,19 @@
+name: recovar
+channels:
+  - conda-forge
+dependencies:
+  - python=3.10
+  - tensorflow=2.14.0
+  - numpy=1.26.0
+  - scikit-learn
+  - matplotlib
+  - scipy
+  - h5py
+  - obspy
+  - seaborn
+  - pandas
+  - jupyter
+  - notebook
+  - pip
+  - pip:
+      - -e .

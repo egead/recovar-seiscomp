@@ -1,0 +1,39 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "recovar"
+version = "0.1.0"
+description = "Unsupervised representation-learning framework for detecting seismic signals in continuous waveform data"
+readme = "README.md"
+requires-python = ">=3.10,<3.12"
+license = { text = "MIT" }
+authors = [{ name = "Onur Efe", email = "onur.efe44@gmail.com" }]
+keywords = ["seismic", "deep-learning", "autoencoder", "signal-detection"]
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+]
+dependencies = [
+    "tensorflow==2.14.0",
+    "numpy==1.26.0",
+    "jupyter",
+    "notebook",
+]
+
+[project.optional-dependencies]
+test = ["scikit-learn", "matplotlib"]
+reproducibility = ["scipy", "h5py", "obspy", "seaborn", "matplotlib", "scikit-learn", "pandas"]
+seiscomp = ["scipy", "obspy", "pymysql", "matplotlib"]
+dev = ["pytest"]
+
+[project.urls]
+Homepage = "https://github.com/onurefe/recovar"
+Repository = "https://github.com/onurefe/recovar.git"
+
+[tool.setuptools]
+packages = ["recovar"]
