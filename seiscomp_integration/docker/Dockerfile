@@ -30,7 +30,7 @@ RUN mkdir -p /run/sshd \
 RUN python3.10 -m pip install "numpy==1.26.0" \
     && python3.10 -c "import numpy; print('system numpy', numpy.__version__)"
 
-COPY seiscomp-7.2.3-ubuntu22.04-x86_64.tar.gz /tmp/seiscomp.tar.gz
+COPY seiscomp-7.*-ubuntu22.04-x86_64.* /tmp/seiscomp.tar.gz
 RUN tar xzf /tmp/seiscomp.tar.gz -C /root/ && rm /tmp/seiscomp.tar.gz
 
 RUN python3.10 -m venv /root/recovar-seiscomp \

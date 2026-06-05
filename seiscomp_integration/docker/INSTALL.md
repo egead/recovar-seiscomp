@@ -1,6 +1,6 @@
 # RECOVAR SeisComP: Docker installation
 
-Build and start the Docker container that runs SeisComP 7.2.3 + the RECOVAR
+Build and start the Docker container that runs SeisComP 7.x + the RECOVAR
 `recovar_pick_filter` daemon. Once it is up, see the
 [Docker demo](DEMO.md) to run the pick-filter pipeline.
 
@@ -11,15 +11,17 @@ Files here:
 
 ## Download SeisComP (required before building)
 
-Download `seiscomp-7.2.3-ubuntu22.04-x86_64.tar.gz` from
-[seiscomp.de/downloader](https://www.seiscomp.de/downloader/) (free account) and place
-it in this folder:
+Download a SeisComP 7.x release for Ubuntu 22.04 (e.g.
+`seiscomp-7.3.0-ubuntu22.04-x86_64.tar.gz`) from
+[seiscomp.de/downloader](https://www.seiscomp.de/downloader/)
+and place it in this folder:
 
 ```bash
-seiscomp_integration/docker/seiscomp-7.2.3-ubuntu22.04-x86_64.tar.gz
+seiscomp_integration/docker/seiscomp-7.*-ubuntu22.04-x86_64.tar.gz
 ```
 
-The Dockerfile `COPY`s this exact filename, so the name must match.
+The Dockerfile matches `seiscomp-7.*-ubuntu22.04-x86_64.*`, so any 7.x version works,
+but keep only **one** such file in the folder (the build fails if it matches several).
 
 ## Build
 
