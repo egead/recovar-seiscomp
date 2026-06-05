@@ -6,7 +6,9 @@ ENV PATH=/usr/bin:/root/seiscomp/bin:/root/recovar-seiscomp/bin:$PATH
 ENV LD_LIBRARY_PATH=/root/seiscomp/lib
 ENV PYTHONPATH=/root/seiscomp/lib/python:/root/recovar:/root/recovar/seiscomp_integration
 
-RUN apt-get update && apt-get install -y \
+# Retry apt on flaky networks for mac
+RUN echo 'Acquire::Retries "5";' > /etc/apt/apt.conf.d/80-retries \
+    && apt-get update && apt-get install -y --fix-missing \
         python3.10 python3.10-venv python3.10-dev \
         libboost-program-options1.74.0 \
         libboost-iostreams1.74.0 \
