@@ -2,6 +2,8 @@
 
 [![arXiv](https://img.shields.io/badge/arXiv-2407.18402v1-b31b1b.svg)](https://arxiv.org/abs/2407.18402)
 
+Github pages: https://egead.github.io/recovar-seiscomp
+
 ## Table of Contents
 
 - [Recovar:](#recovar)
@@ -31,8 +33,8 @@ and installs the `recovar` package (and dependencies) in
 one step.
 
 ```bash
-git clone git@github.com:egeadg/recovar-seiscomp.git
-cd recovar
+git clone https://github.com/egead/recovar-seiscomp.git
+cd recovar-seiscomp
 conda env create -f environment.yml --solver=libmamba
 conda activate recovar
 ```
