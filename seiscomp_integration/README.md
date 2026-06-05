@@ -1,11 +1,11 @@
-# RECOVAR — SeisComP Integration
+# RECOVAR: SeisComP Integration
 
 Run RECOVAR as a real-time pick filter inside SeisComP: every pick from
 `scautopick` gets a `recovar_score:[0–1]` comment attached and persisted to the
 database.
 
 Tested on Ubuntu 22.04 with SeisComP 7.x. For a containerized setup instead, see
-[`docker/README.md`](docker/README.md).
+[`docker/INSTALL.md`](docker/INSTALL.md) and [`docker/DEMO.md`](docker/DEMO.md).
 
 ## Install
 
@@ -175,7 +175,7 @@ seiscomp exec scart -dsE \
     ~/seiscomp_test/sds > /tmp/playback.mseed
 ```
 
-`sdsarchive://` can't be used directly with scautopick in playback mode — scautopick
+`sdsarchive://` can't be used directly with scautopick in playback mode, scautopick
 requests "current time" data from the SDS reader, which falls outside the 2018–2024
 archive. Exporting to a flat file first avoids this.
 

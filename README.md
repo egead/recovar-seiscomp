@@ -21,8 +21,8 @@
 ### Prerequisites
 
 - **Python:** 3.10 or 3.11. TensorFlow 2.14.0 has no wheel for Python 3.12, so the environment is capped at `<3.12`.
-- **TensorFlow / NumPy:** the project is pinned to `tensorflow==2.14.0` and `numpy==1.26.0`. The NumPy pin is required — TensorFlow 2.14 declares no upper bound on NumPy and will crash with an ABI error if NumPy 2.x is installed.
-- **NVIDIA GPU drivers + CUDA/cuDNN (optional):** only needed for GPU support versions must be compatible with TensorFlow 2.14.0.
+- **TensorFlow / NumPy:** the project is pinned to `tensorflow==2.14.0` and `numpy==1.26.0`. The NumPy pin is required, TensorFlow 2.14 declares no upper bound on NumPy and will crash with an ABI error if NumPy 2.x is installed.
+- **NVIDIA GPU drivers + CUDA/cuDNN (optional):** only needed for GPU support; versions must be compatible with TensorFlow 2.14.0.
 
 ### Installation Using conda 
 
@@ -58,8 +58,9 @@ RECOVAR can run as a real-time pick filter inside [SeisComP](https://www.seiscom
 scoring incoming picks with the pretrained model. The integration lives in the
 `seiscomp_integration/` folder and ships its own installer and docs:
 
-- `seiscomp_integration/README.md` — installing the daemon, running it, and querying scored picks.
-- `seiscomp_integration/docker/README.md` — a containerized setup.
+- `seiscomp_integration/README.md`, installing the daemon, running it, and querying scored picks.
+- `seiscomp_integration/docker/INSTALL.md`, building and starting the container.
+- `seiscomp_integration/docker/DEMO.md`, running the pick-filter demo in the container.
 
 
 ## Contact

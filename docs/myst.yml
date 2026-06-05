@@ -11,12 +11,19 @@ project:
       title: Overview & install
     - file: ../demo.ipynb
       title: Demo
-    - file: mseed.md
-    - title: SeisComP
+    - title: SeisComP integration
       children:
+        - file: ../seiscomp_integration/docker/INSTALL.md
+          title: Docker installation
+        - file: ../seiscomp_integration/docker/DEMO.md
+          title: Docker demo
         - file: ../seiscomp_integration/README.md
-          title: SeisComP integration
-        - file: ../seiscomp_integration/docker/README.md
-          title: Docker
+          title: Installing and using on Ubuntu
+    - file: mseed.md
 site:
   template: book-theme
+  options:
+    logo_text: RECOVAR
+  parts:
+    primary_sidebar_footer: |
+      RECOVAR · [GitHub](https://github.com/egead/recovar-seiscomp)
