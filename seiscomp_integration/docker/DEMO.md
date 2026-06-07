@@ -1,7 +1,7 @@
 # RECOVAR SeisComP: Docker demo
 
 Run the pick-filter pipeline inside the container. First build and start the
-container, see [Docker installation](INSTALL.md). Then open a shell in it over SSH:
+container, see [Docker installation](INSTALL.md). Then open a shell in it over SSH to connect to the docker container:
 
 ```bash
 ssh -p 2222 root@localhost        # password: recovar
