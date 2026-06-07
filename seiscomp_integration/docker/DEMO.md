@@ -3,6 +3,8 @@
 Run the pick-filter pipeline inside the container. First build and start the
 container, see [Docker installation](INSTALL.md). Then open a shell in it over SSH to connect to the docker container:
 
+# ADD TOP DOWN INTRO + SUMMARY, WHAT IS THIS RECOVAR THING DOING SUMMARIZE IT RECOVAR SEISCOMP MODULE U NAPIYOR ONCE BUNU ACIKLA 
+
 ```bash
 ssh -p 2222 root@localhost        # password: recovar
 ```
@@ -15,7 +17,7 @@ Run the steps below from that shell.
 each. It runs on an archive/playback and **needs IRIS network access** to fetch the
 inventory and test archive. Run the steps in order.
 
-1. Start the message system and DB writer:
+1. Start and check the SeisComp bus and database writer:
 
 ```bash
 seiscomp --asroot start scmaster scdb
@@ -62,7 +64,7 @@ EOF
 seiscomp --asroot update-config scautopick
 ```
 
-4. Build the test archive from IRIS (needs network):
+4. Download the test archive from IRIS (needs network):
 
 ```bash
 /root/recovar-seiscomp/bin/python3 /root/recovar/seiscomp_integration/create_test_archive.py --output /root/seiscomp_test/sds
@@ -110,10 +112,10 @@ sleep 20   # let recovar drain
 kill $RECOVAR_PID
 ```
 
-9. Query the scored picks:
+9. Query the scored picks from the SeisComp database and plot the scores:
 
 ```bash
-/root/recovar-seiscomp/bin/python3 /root/recovar/seiscomp_integration/query_scored_picks.py --sds /root/seiscomp_test/sds
+/root/recovar-seiscomp/bin/python3 /root/recovar/seiscomp_integration/query_scored_picks.py --sds /root/seiscomp_test/sds --plot --plot-output /tmp/scored_picks.png
 ```
 
 ## Get the figure over SSH
@@ -121,12 +123,6 @@ kill $RECOVAR_PID
 `query_scored_picks.py` can save a waveform/score figure to a PNG (`--plot`
 uses a headless backend, so no display is needed). Generate it inside the
 container, then copy it to the host with `scp`.
-
-Inside the container:
-
-```bash
-/root/recovar-seiscomp/bin/python3 /root/recovar/seiscomp_integration/query_scored_picks.py --sds /root/seiscomp_test/sds --plot --plot-output /tmp/scored_picks.png
-```
 
 On the host:
 
