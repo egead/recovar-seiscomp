@@ -4,7 +4,7 @@ project:
   id: 5f8f1e80-de5f-4884-bb57-9d4c663358bb
   title: RECOVAR
   description: Unsupervised earthquake detection from continuous waveforms.
-  github: https://github.com/onurefe/recovar
+  github: https://github.com/egead/recovar-seiscomp
   toc:
     - file: index.md
     - file: ../README.md
@@ -19,7 +19,6 @@ project:
           title: Docker demo
         - file: ../seiscomp_integration/README.md
           title: Installing and using on Ubuntu
-    - file: mseed.md
 site:
   template: book-theme
   options:

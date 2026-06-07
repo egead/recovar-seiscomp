@@ -1,30 +1,32 @@
 # RECOVAR SeisComP: Docker demo
 
 Run the pick-filter pipeline inside the container. First build and start the
-container and shell into it, see [Docker installation](INSTALL.md). The steps below
-assume you are in the container shell with the `$PY` / `$SDS` / `$SC` shortcuts set
-(they are defined in the installation page).
+container, see [Docker installation](INSTALL.md). Then open a shell in it over SSH:
+
+```bash
+ssh -p 2222 root@localhost        # password: recovar
+```
+
+Run the steps below from that shell.
 
 ## Pick-filter pipeline
 
 `scautopick` produces picks and `recovar_pick_filter` attaches a `recovar_score` to
 each. It runs on an archive/playback and **needs IRIS network access** to fetch the
-inventory and test archive.
-
-Run these steps in the container shell, in order.
+inventory and test archive. Run the steps in order.
 
 1. Start the message system and DB writer:
 
 ```bash
-$SC start scmaster scdb
+seiscomp --asroot start scmaster scdb
 sleep 6
-$SC status scmaster scdb
+seiscomp --asroot status scmaster scdb
 ```
 
 2. Load station inventory from IRIS (needs network):
 
 ```bash
-$PY -c "
+/root/recovar-seiscomp/bin/python3 -c "
 from obspy.clients.fdsn import Client
 from obspy import UTCDateTime
 inv = Client('IRIS').get_stations(
@@ -34,20 +36,20 @@ inv = Client('IRIS').get_stations(
 inv.write('/tmp/inventory.xml', format='STATIONXML')
 print('inventory written')
 "
-$SC exec import_inv fdsnxml /tmp/inventory.xml $SEISCOMP_ROOT/etc/inventory/station.xml
-$SC exec scinv sync --filebase $SEISCOMP_ROOT/etc/inventory/ \
+seiscomp --asroot exec import_inv fdsnxml /tmp/inventory.xml /root/seiscomp/etc/inventory/station.xml
+seiscomp --asroot exec scinv sync --filebase /root/seiscomp/etc/inventory/ \
     -d mysql://sysop:sysop@localhost/seiscomp
 ```
 
 3. Configure scautopick bindings:
 
 ```bash
-cat > $SEISCOMP_ROOT/etc/key/station_IU_ANMO << 'EOF'
+cat > /root/seiscomp/etc/key/station_IU_ANMO << 'EOF'
 global:default
 scautopick:default
 EOF
-mkdir -p $SEISCOMP_ROOT/etc/key/scautopick
-cat > $SEISCOMP_ROOT/etc/key/scautopick/profile_default << 'EOF'
+mkdir -p /root/seiscomp/etc/key/scautopick
+cat > /root/seiscomp/etc/key/scautopick/profile_default << 'EOF'
 detecStream    = HH
 detecLocid     = 00
 detecFilter    = "RMHP(10)>>ITAPER(30)>>BW(4,1,20)>>STALTA(0.5,10)"
@@ -57,21 +59,26 @@ timeCorr       = -0.8
 picker         = AIC
 useSquaredness = true
 EOF
-$SC update-config scautopick
+seiscomp --asroot update-config scautopick
 ```
 
 4. Build the test archive from IRIS (needs network):
 
 ```bash
-$PY /root/recovar/seiscomp_integration/create_test_archive.py --output $SDS
+/root/recovar-seiscomp/bin/python3 /root/recovar/seiscomp_integration/create_test_archive.py --output /root/seiscomp_test/sds
 ```
 
-5. Start the pick filter in the background and wait for it to come up:
+5. Start the pick filter in the background and wait for it to come up. Stop any
+   previous instance first. two clients with the same name can't connect to the
+   messaging system at once (see Troubleshooting):
 
 ```bash
-$SC exec recovar_pick_filter \
+seiscomp --asroot stop recovar_pick_filter 2>/dev/null   # clear a managed instance, if any
+pkill -f recovar_pick_filter 2>/dev/null                 # clear a leftover background run
+
+seiscomp --asroot exec recovar_pick_filter \
     --model-path /root/recovar/models/representation_cross_covariances.h5 \
-    --record-stream "sdsarchive://$SDS" \
+    --record-stream "sdsarchive:///root/seiscomp_test/sds" \
     > /root/.seiscomp/log/recovar_pick_filter.log 2>&1 &
 RECOVAR_PID=$!
 tail -f /root/.seiscomp/log/recovar_pick_filter.log   # Ctrl-C once you see "pick_filter: ready"
@@ -80,17 +87,17 @@ tail -f /root/.seiscomp/log/recovar_pick_filter.log   # Ctrl-C once you see "pic
 6. Export the archive to flat MiniSEED:
 
 ```bash
-$SC exec scart -dsE \
+seiscomp --asroot exec scart -dsE \
     -t "2018-01-01T00:00:00~2024-12-31T23:59:59" \
     -n "IU.ANMO.00" \
-    $SDS > /tmp/playback.mseed
+    /root/seiscomp_test/sds > /tmp/playback.mseed
 ls -lh /tmp/playback.mseed
 ```
 
 7. Run the playback:
 
 ```bash
-$SC exec scautopick \
+seiscomp --asroot exec scautopick \
     --playback \
     -I "file:///tmp/playback.mseed" \
     -d mysql://sysop:sysop@localhost/seiscomp
@@ -106,7 +113,7 @@ kill $RECOVAR_PID
 9. Query the scored picks:
 
 ```bash
-$PY /root/recovar/seiscomp_integration/query_scored_picks.py --sds $SDS
+/root/recovar-seiscomp/bin/python3 /root/recovar/seiscomp_integration/query_scored_picks.py --sds /root/seiscomp_test/sds
 ```
 
 ## Get the figure over SSH
@@ -118,7 +125,7 @@ container, then copy it to the host with `scp`.
 Inside the container:
 
 ```bash
-$PY /root/recovar/seiscomp_integration/query_scored_picks.py --sds $SDS --plot --plot-output /tmp/scored_picks.png
+/root/recovar-seiscomp/bin/python3 /root/recovar/seiscomp_integration/query_scored_picks.py --sds /root/seiscomp_test/sds --plot --plot-output /tmp/scored_picks.png
 ```
 
 On the host:
@@ -129,5 +136,16 @@ scp -P 2222 root@localhost:/tmp/scored_picks.png .   # password: recovar
 
 ## Notes
 
-- The repo mount is read-only, write to `/tmp`, `$SDS`, or the SeisComP trees, not
-  `/root/recovar`.
+- The repo mount is read-only, write to `/tmp`, `/root/seiscomp_test/sds`, or the
+  SeisComP trees, not `/root/recovar`.
+
+## Troubleshooting
+
+- **`... name not unique`**: a `recovar_pick_filter` client is already connected to
+  the messaging system (e.g. you re-ran step 5 without stopping the previous run).
+  SeisComP rejects a second client with the same name. Clear it and start again:
+
+  ```bash
+  seiscomp --asroot stop recovar_pick_filter 2>/dev/null
+  pkill -f recovar_pick_filter 2>/dev/null
+  ```

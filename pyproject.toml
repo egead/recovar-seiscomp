@@ -8,14 +8,14 @@ version = "0.1.0"
 description = "Unsupervised representation-learning framework for detecting seismic signals in continuous waveform data"
 readme = "README.md"
 requires-python = ">=3.10,<3.12"
-license = { text = "MIT" }
+license = { text = "AGPL-3.0-or-later" }
 authors = [{ name = "Onur Efe", email = "onur.efe44@gmail.com" }]
 keywords = ["seismic", "deep-learning", "autoencoder", "signal-detection"]
 classifiers = [
     "Programming Language :: Python :: 3",
     "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
-    "License :: OSI Approved :: MIT License",
+    "License :: OSI Approved :: GNU Affero General Public License v3 or later (AGPLv3+)",
     "Operating System :: OS Independent",
 ]
 dependencies = [
@@ -32,8 +32,8 @@ seiscomp = ["scipy", "obspy", "pymysql", "matplotlib"]
 dev = ["pytest"]
 
 [project.urls]
-Homepage = "https://github.com/onurefe/recovar"
-Repository = "https://github.com/onurefe/recovar.git"
+Homepage = "https://github.com/egead/recovar-seiscomp"
+Repository = "https://github.com/egead/recovar-seiscomp.git"
 
 [tool.setuptools]
 packages = ["recovar"]

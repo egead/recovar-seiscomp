@@ -52,8 +52,7 @@ seiscomp setup
 4. Clone RECOVAR and run the installer:
 
 ```bash
-git clone git@github.com:onurefe/recovar.git ~/recovar
-cd ~/recovar && git checkout seiscomp-integration
+git clone https://github.com/egead/recovar-seiscomp.git ~/recovar
 bash ~/recovar/seiscomp_integration/install.sh
 ```
 

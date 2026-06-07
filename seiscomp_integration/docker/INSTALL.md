@@ -9,6 +9,17 @@ Files here:
 - `Dockerfile`: Ubuntu 22.04 + SeisComP + a Python venv with TensorFlow 2.14.
 - `entrypoint.sh`: sets up (DB, config, daemon install, verify) then idles.
 
+The image is **amd64 (x86_64)**.
+
+To skip the build, download the prebuilt image and load it, then go straight to the
+[Start](#start) section:
+
+```bash
+curl -L -o recovar-seiscomp.tar.gz \
+    https://github.com/egead/recovar-seiscomp/releases/download/recovar-docker-image/recovar-seiscomp.tar.gz
+docker load < recovar-seiscomp.tar.gz
+```
+
 ## Download SeisComP (required before building)
 
 Download a SeisComP 7.x release for Ubuntu 22.04 (e.g.
@@ -50,25 +61,20 @@ docker logs -f recovar-seiscomp      # done when it prints "Setup complete"
 
 ## Shell in
 
-```bash
-docker exec -it recovar-seiscomp bash
-```
-or over SSH (the container runs sshd, port 22 published on host port 2222):
+The container runs sshd (port 22 published on host port 2222):
 
 ```bash
 ssh -p 2222 root@localhost        # password: recovar
 ```
 
-The environment (`SEISCOMP_ROOT`, `PATH`, `PYTHONPATH`, …) is already set and the
-venv lives at `/root/recovar-seiscomp`.
-
-The demo steps use these shortcuts:
+or directly with docker:
 
 ```bash
-PY=/root/recovar-seiscomp/bin/python3
-SDS=/root/seiscomp_test/sds
-SC="seiscomp --asroot"
+docker exec -it recovar-seiscomp bash
 ```
+
+The environment (`SEISCOMP_ROOT`, `PATH`, `PYTHONPATH`, …) is already set and the
+venv lives at `/root/recovar-seiscomp`.
 
 ## Stop / clean up
 
@@ -77,3 +83,7 @@ docker stop recovar-seiscomp      # stop, keep state
 docker start recovar-seiscomp     # resume
 docker rm -f recovar-seiscomp     # remove
 ```
+
+## Licensing
+
+This image bundles **SeisComP** ([source](https://github.com/SeisComP/seiscomp)), and the RECOVAR integration here are licensed under the GNU AGPL v3 redistribution is permitted under those terms.
