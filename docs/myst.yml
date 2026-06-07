@@ -13,6 +13,8 @@ project:
       title: Demo
     - title: SeisComP integration
       children:
+        - file: ../seiscomp_integration/docker/OVERVIEW.md
+          title: RECOVAR SeisComP Integration overview
         - file: ../seiscomp_integration/docker/INSTALL.md
           title: Docker installation
         - file: ../seiscomp_integration/docker/DEMO.md

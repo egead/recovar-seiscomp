@@ -1,9 +1,9 @@
 # RECOVAR SeisComP: Docker demo
 
-Run the pick-filter pipeline inside the container. First build and start the
-container, see [Docker installation](INSTALL.md). Then open a shell in it over SSH to connect to the docker container:
-
-# ADD TOP DOWN INTRO + SUMMARY, WHAT IS THIS RECOVAR THING DOING SUMMARIZE IT RECOVAR SEISCOMP MODULE U NAPIYOR ONCE BUNU ACIKLA 
+Run the pick-filter pipeline inside the container. For what this does, see the
+[overview](OVERVIEW.md). First build and start the container, see
+[Docker installation](INSTALL.md). Then open a shell in it over SSH to connect to
+the docker container:
 
 ```bash
 ssh -p 2222 root@localhost        # password: recovar
