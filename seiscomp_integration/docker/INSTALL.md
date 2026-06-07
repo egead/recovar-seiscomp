@@ -39,7 +39,7 @@ seiscomp_integration/docker/seiscomp-7.*-ubuntu22.04-x86_64.tar.gz
 
 The Dockerfile matches `seiscomp-7.*-ubuntu22.04-x86_64.*`, so any 7.x version works.
 
-### Build
+### Build the Docker Image
 
 From the repo root:
 
@@ -47,7 +47,7 @@ From the repo root:
 docker build -t recovar-seiscomp seiscomp_integration/docker
 ```
 
-## Start
+# Start Docker Container
 
 The repo is mounted read-only at `/root/recovar`, so the container uses your local
 code without a rebuild.
@@ -72,16 +72,10 @@ The container runs sshd (port 22 published on host port 2222):
 ssh -p 2222 root@localhost        # password: recovar
 ```
 
-or directly with docker:
-
-```bash
-docker exec -it recovar-seiscomp bash
-```
-
 The environment (`SEISCOMP_ROOT`, `PATH`, `PYTHONPATH`, …) is already set and the
 venv lives at `/root/recovar-seiscomp`.
 
-## Stop / clean up
+## Managing The Docker Container
 
 ```bash
 docker stop recovar-seiscomp      # stop, keep state
