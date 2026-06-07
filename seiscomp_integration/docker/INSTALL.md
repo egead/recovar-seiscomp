@@ -11,8 +11,12 @@ Files here:
 
 The image is **amd64 (x86_64)**.
 
-To skip the build, download the prebuilt image and load it, then go straight to the
-[Start](#start) section:
+Get the image in one of two ways: download the prebuilt image, or build it yourself.
+Then continue to the [Start](#start) section.
+
+## Download the Docker image
+
+Download the prebuilt image and load it:
 
 ```bash
 curl -L -o recovar-seiscomp.tar.gz \
@@ -20,7 +24,9 @@ curl -L -o recovar-seiscomp.tar.gz \
 docker load < recovar-seiscomp.tar.gz
 ```
 
-## Download SeisComP (required before building)
+## Build the Docker image yourself
+
+### Download SeisComP (required before building)
 
 Download a SeisComP 7.x release for Ubuntu 22.04 (e.g.
 `seiscomp-7.3.0-ubuntu22.04-x86_64.tar.gz`) from
@@ -31,10 +37,9 @@ and place it in this folder:
 seiscomp_integration/docker/seiscomp-7.*-ubuntu22.04-x86_64.tar.gz
 ```
 
-The Dockerfile matches `seiscomp-7.*-ubuntu22.04-x86_64.*`, so any 7.x version works,
-but keep only **one** such file in the folder (the build fails if it matches several).
+The Dockerfile matches `seiscomp-7.*-ubuntu22.04-x86_64.*`, so any 7.x version works.
 
-## Build
+### Build
 
 From the repo root:
 
