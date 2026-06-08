@@ -11,8 +11,18 @@ Files here:
 
 The image is **amd64 (x86_64)**.
 
-Get the image in one of two ways: download the prebuilt image, or build it yourself.
-Then continue to the [Start](#start) section.
+You should run the Docker image from inside the `recovar-seiscomp` directory, whether
+you download or build the image. Clone the repo and open the folder with the following
+commands:
+
+```bash
+git clone https://github.com/egead/recovar-seiscomp.git
+cd recovar-seiscomp
+```
+
+Then get the image in one of two ways: download the prebuilt image, or build it
+yourself. Then continue to the
+[Start and Connect to Docker Container](#start-and-connect-to-docker-container) section.
 
 ## Download the Docker image
 
@@ -47,8 +57,8 @@ docker build -t recovar-seiscomp seiscomp_integration/docker
 
 # Start and Connect to Docker Container
 
-The repo is mounted read-only at `/root/recovar`, so the container uses your local
-code without a rebuild.
+Run this from the `recovar-seiscomp` directory. It mounts your local repo into the
+container in a read-only state.
 
 ```bash
 docker run -d --name recovar-seiscomp  -p 2222:22  -v "$PWD":/root/recovar:ro  recovar-seiscomp

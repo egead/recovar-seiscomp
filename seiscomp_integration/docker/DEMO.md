@@ -83,7 +83,8 @@ seiscomp --asroot exec recovar_pick_filter \
     --record-stream "sdsarchive:///root/seiscomp_test/sds" \
     > /root/.seiscomp/log/recovar_pick_filter.log 2>&1 &
 RECOVAR_PID=$!
-tail -f /root/.seiscomp/log/recovar_pick_filter.log   # Ctrl-C once you see "pick_filter: ready"
+until grep -q "pick_filter: ready" /root/.seiscomp/log/recovar_pick_filter.log; do sleep 1; done
+echo "ready"
 ```
 
 6. Export the archive to flat MiniSEED:
