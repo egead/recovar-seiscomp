@@ -21,8 +21,7 @@ cd recovar-seiscomp
 ```
 
 Then get the image in one of two ways: download the prebuilt image, or build it
-yourself. Then continue to the
-[Start and Connect to Docker Container](#start-and-connect-to-docker-container) section.
+yourself. Then continue to the [Start and Connect to Docker Container](#start) section.
 
 ## Download the Docker image
 
@@ -55,6 +54,7 @@ Build the Docker image from the repo root:
 docker build -t recovar-seiscomp seiscomp_integration/docker
 ```
 
+(start)=
 # Start and Connect to Docker Container
 
 Run this from the `recovar-seiscomp` directory. It mounts your local repo into the

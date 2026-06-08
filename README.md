@@ -45,7 +45,7 @@ pip install ".[test]"
 
 ## License
 
-RECOVAR is released under the GNU AGPL v3 (see [`LICENSE`](LICENSE)). The SeisComP
+RECOVAR is released under the GNU AGPL v3 (see [`LICENSE`](./LICENSE)). The SeisComP
 integration links against SeisComP, which is itself AGPL v3.
 
 ## Contact
