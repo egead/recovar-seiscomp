@@ -1,4 +1,4 @@
-# RECOVAR
+# RECOVAR User Manual
 
 RECOVAR is an unsupervised machine-learning framework for detecting seismic signals in continuous waveform data. It learns compressed representations waveforms with multiple-autoencoders and scores each 30 s  window with an earthquake probability in [0, 1]. 
 
